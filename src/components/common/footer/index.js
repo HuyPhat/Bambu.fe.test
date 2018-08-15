@@ -4,7 +4,7 @@ import styles from "./footer.css";
 
 export default () => {
   return (
-    <footer className={"footer " + styles.footer}>
+    <footer className={styles.footer}>
       <div className="content has-text-centered">
         <p>
           <strong>Bulma</strong> by{" "}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import PageHome from "page/home";
 import Header from "components/common/header";
 import Footer from "components/common/footer";
@@ -6,9 +7,14 @@ import Footer from "components/common/footer";
 const App = () => {
   return (
     <div>
-      <Header />
-      <PageHome />
-      <Footer />
+      <Router>
+        <div>
+          <Header />
+          <Route exact path="/" component={PageHome} />
+          <Route exact path="/:stockSymbol" component={PageHome} />
+          <Footer />
+        </div>
+      </Router>
     </div>
   );
 };

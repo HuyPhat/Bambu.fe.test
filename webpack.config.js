@@ -1,9 +1,9 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html"
+  template: './src/index.html',
+  filename: './index.html'
 });
 
 module.exports = {
@@ -13,21 +13,22 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader'
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               modules: true,
               importLoaders: 1,
-              localIdentName: "[name]_[local]_[hash:base64]",
+              localIdentName: '[name]_[local]_[hash:base64]',
               sourceMap: true,
               minimize: true
             }
@@ -36,16 +37,20 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
+        exclude: /node_modules/,
         use: [
-          "style-loader", // creates style nodes from JS strings
-          "css-loader", // translates CSS into CommonJS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          { loader: 'style-loader' }, // creates style nodes from JS strings
+          { loader: 'css-loader' }, // translates CSS into CommonJS
+          { loader: 'sass-loader' } // compiles Sass to CSS, using Node Sass by default
         ]
       }
     ]
   },
   resolve: {
-    modules: [path.resolve(__dirname, "./src/"), "node_modules"]
+    modules: [path.resolve(__dirname, './src/'), 'node_modules']
   },
   plugins: [htmlPlugin]
+  // devServer: {
+  //   historyApiFallback: true
+  // }
 };

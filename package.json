@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --mode development --open --hot --history-api-fallback",
     "build": "webpack --mode production"
   },
   "repository": "git@github.com:HuyPhat/Bambu.fe.test.git",
@@ -27,6 +27,7 @@
     "bulma": "^0.7.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1"
   }
 }

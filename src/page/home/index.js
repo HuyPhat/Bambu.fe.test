@@ -1,23 +1,41 @@
 import * as React from "react";
-// import Header from "components/common/header";
-// import Footer from "components/common/footer";
+import { Link } from "react-router-dom";
+import "./style.scss";
 
-const PageHome = () => {
+const PageHome = ({ match }) => {
+  console.log("page home -> ", match.params.stockSymbol);
+  const stockCodes = [
+    "MSFT",
+    "AAPL",
+    "INTC",
+    "NFLX",
+    "ORCL",
+    "CMCSA",
+    "GOOG",
+    "LUV",
+    "HOG",
+    "GOOGL",
+    "AMZN"
+  ];
   return (
-    <div className="page-home">
-      <main>
+    <section className={"pagehome"}>
+      <div className={"pagehome-body"}>
         <div className="tile is-ancestor">
           <div className="tile is-4 is-vertical is-parent">
             <div className="tile is-child box">
               <aside className="menu">
-                <p className="menu-label">General</p>
+                <p className="menu-label">Stock Symbol</p>
                 <ul className="menu-list">
-                  <li>
-                    <a>Dashboard</a>
-                  </li>
-                  <li>
-                    <a>Customers</a>
-                  </li>
+                  {stockCodes.map((item, index) => (
+                    <li
+                      key={index}
+                      className={
+                        item === match.params.stockSymbol ? "active" : null
+                      }
+                    >
+                      <Link to={`/${item}`}>{item}</Link>
+                    </li>
+                  ))}
                 </ul>
               </aside>
             </div>
@@ -28,8 +46,8 @@ const PageHome = () => {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </section>
   );
 };
 
