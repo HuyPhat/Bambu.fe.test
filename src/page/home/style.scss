@@ -1,19 +1,27 @@
 .pagehome {
-    .pagehome-body {
-        flex-grow: 1;
-        flex-shrink: 0;
-        padding: 3rem 1.5rem;
-        padding-bottom: 1rem;
-        padding-top: 1rem;
+  .pagehome-body {
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 3rem 1.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 
-        .menu-list {
-            li {
-                &.active {
-                    a {
-                        background-color: whitesmoke;
-                    }
-                }
-            }
+    .menu-list {
+      li {
+        &.active {
+          a {
+            background-color: whitesmoke;
+          }
         }
+      }
     }
+
+    #canvas-box {
+      display: flex;
+      #ohlcvis {
+        border: 1px solid #ccc;
+        flex: 1;
+      }
+    }
+  }
 }
