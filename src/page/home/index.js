@@ -783,38 +783,28 @@ class PageHome extends React.PureComponent {
 
   __visualizeData = () => {
     const highKey = "2. high";
-    const lowKey = "3. low";
-
-    const { response } = this.state;
+    const items = this.state.response["Time Series (Daily)"];
     const chartTitle = this.props.match.params.stockSymbol || null;
-    const items = response["Time Series (Daily)"];
+    let maxHigh;
     const itemsCount = Object.keys(items).length;
-    let maxHigh,
-      minLow = 0;
-
+    console.log("items count -> ", itemsCount);
     for (const key in items) {
-      if (
-        (minLow !== 0 && minLow > Number(items[key][lowKey])) ||
-        minLow === 0
-      ) {
-        minLow = Number(items[key][lowKey]);
-      }
-      if (!maxHigh || maxHigh < Number(items[key][highKey])) {
+      if (!maxHigh) {
         maxHigh = Number(items[key][highKey]);
+      } else {
+        if (maxHigh < Number(items[key][highKey])) {
+          maxHigh = Number(items[key][highKey]);
+        }
       }
     }
-    minLow = Math.floor(minLow);
     maxHigh = Math.ceil(maxHigh);
-
-    const yLength = maxHigh - minLow;
-    console.log("yLength: ", yLength);
+    console.log("maxHigh -> ", maxHigh);
 
     const graph = this.graph.current;
     const ctx = graph.getContext("2d");
 
     graph.width = graph.scrollWidth;
     graph.height = graph.scrollHeight;
-
     const widthcv = graph.width;
     const heightcv = graph.height;
 
@@ -822,7 +812,6 @@ class PageHome extends React.PureComponent {
     const offsetY = heightcv * 0.06; //50
 
     if (chartTitle) {
-      ctx.font = "20px Arial";
       ctx.fillText(this.props.match.params.stockSymbol, widthcv / 2, 10);
     }
 
@@ -845,25 +834,16 @@ class PageHome extends React.PureComponent {
       ctx.fillText(text, x1, y1);
     };
 
-    // const pixelConverter = n => {
-    //   return (n / maxHigh) * (heightcv - offsetY * 2);
-    // };
-
     const pixelConverter = n => {
-      return (n / yLength) * (heightcv - offsetY * 2);
+      return (n / maxHigh) * (heightcv - offsetY * 2);
     };
 
     const textAdjust = text => {
-      // console.log(text.toString().length * 3);
+      console.log(text.toString().length * 3);
       return text.toString().length * 5; // 3px
     };
 
-    // const steps = Math.round(maxHigh / 5);
-    const steps = Math.round(yLength / 5);
-    // const stepsNumber = (maxHigh - minLow) / steps;
-
-    // console.log(Math.round(maxHigh / 5) + ", " + Math.round(yLength / 5));
-
+    const steps = Math.round(maxHigh / 5);
     const pixelPerStepForY = (heightcv - offsetY * 2) / steps;
     const pixelPerStepForX = (widthcv - offsetX * 2) / itemsCount;
 
@@ -875,8 +855,8 @@ class PageHome extends React.PureComponent {
       const low = Number(item["3. low"]);
       const open = Number(item["1. open"]);
       const close = Number(item["4. close"]);
-      //   console.log("or high: ", high, low);
-      //   console.log(pixelConverter(high));
+      console.log("or high: ", high, low);
+      console.log(pixelConverter(high));
       const highPx = revertHeight(pixelConverter(high) + offsetY);
       const lowPx = revertHeight(pixelConverter(low) + offsetY);
       const openPx = revertHeight(pixelConverter(open) + offsetY);
@@ -891,7 +871,7 @@ class PageHome extends React.PureComponent {
       drawLine(x1, closePx, x1 + 2, closePx, color, 1);
     };
 
-    // console.log(pixelConverter(50) + ' px');
+    console.log(pixelConverter(50) + " px");
 
     drawLine(
       offsetX,
@@ -914,10 +894,9 @@ class PageHome extends React.PureComponent {
         offsetX,
         revertHeight(i * pixelPerStepForY + offsetY)
       );
-
       drawText(
-        `$${minLow + i * 5}`,
-        offsetX - 10 - textAdjust(`$${minLow + i * 5}`),
+        `$${i * 5}`,
+        offsetX - 10 - textAdjust(`$${i * 5}`),
         revertHeight(i * pixelPerStepForY + offsetY)
       );
     }
