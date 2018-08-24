@@ -741,6 +741,12 @@ class PageHome extends React.PureComponent {
 		this.__visualizeData();
 	}
 
+	componentWillUpdate() {
+		const graph = this.graph.current;
+		const ctx = graph.getContext('2d');
+		ctx.clearRect(0, 0, graph.width, graph.height);
+	}
+
 	__clickStockSymbol = (stockSymbol) => async () => {
 		console.log('stockSymbol: ', stockSymbol);
 		this.__fetchChartData(stockSymbol);
