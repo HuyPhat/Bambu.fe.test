@@ -760,7 +760,7 @@ class PageHome extends React.PureComponent {
 					TIME_SERIES.TIME_SERIES_DAILY,
 					this.props.match.params.stockSymbol,
 				);
-				console.log(result);
+				// console.log(result);
 				const TIME_SERIES_DAILY = 'Time Series (Daily)';
 				if (result.statusText === 'OK' || result.status === 200) {
 					if (result.data[TIME_SERIES_DAILY]) {
@@ -813,11 +813,10 @@ class PageHome extends React.PureComponent {
 				}
 			}
 		}
-		console.log('minLow, ', minLow);
 		minLow = Math.floor(minLow);
-		console.log('minLow ', minLow);
 		maxHigh = Math.ceil(maxHigh);
-		// console.log('maxHigh -> ', maxHigh);
+		console.log('minLow -> ', minLow);
+		console.log('maxHigh -> ', maxHigh);
 
 		const yLength = maxHigh - minLow;
 		const graph = this.graph.current;
@@ -871,7 +870,7 @@ class PageHome extends React.PureComponent {
 
 		const steps = Math.round(yLength / 5);
 
-		console.log(Math.round(maxHigh / 5) + ', ' + Math.round(yLength / 5));
+		// console.log(Math.round(maxHigh / 5) + ', ' + Math.round(yLength / 5));
 
 		const pixelPerStepForY = (heightcv - offsetY * 2) / steps;
 		const pixelPerStepForX = (widthcv - offsetX * 2) / itemsCount;
@@ -884,8 +883,8 @@ class PageHome extends React.PureComponent {
 			const low = Number(item['3. low']);
 			const open = Number(item['1. open']);
 			const close = Number(item['4. close']);
-			console.log('or high: ', high, low);
-			console.log(pixelConverter(high));
+			// console.log('or high: ', high, low);
+			// console.log(pixelConverter(high));
 			const highPx = revertHeight(pixelConverter(high) + offsetY);
 			const lowPx = revertHeight(pixelConverter(low) + offsetY);
 			const openPx = revertHeight(pixelConverter(open) + offsetY);
@@ -951,7 +950,7 @@ class PageHome extends React.PureComponent {
 				<section className={'pagehome'}>
 					<div className={'pagehome-body'}>
 						<div className="tile is-ancestor">
-							<div className="tile is-4 is-vertical is-parent">
+							<div className="tile is-2 is-vertical is-parent">
 								<div className="tile is-child box">
 									<aside className="menu">
 										<p className="menu-label">Stock Symbol</p>
